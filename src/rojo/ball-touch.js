@@ -1,3 +1,5 @@
+// room.triggerEvent("onPlayerTouchTheBall", playerId, eventName );
+
 var room = HBInit();
 
 room.pluginSpec = {
@@ -50,7 +52,7 @@ function onGameTickHandler () {
 				playersThatTouchedTheBall.splice(playersThatTouchedTheBall.indexOf(player.id), 1);
 				playersThatTouchedTheBall.unshift(player.id);
 			}
-			room.triggerEvent("onPlayerTouchTheBall", playersThatTouchedTheBall[0] );
+			room.triggerEvent("onPlayerTouchTheBall", playersThatTouchedTheBall[0], "onGameTick" );
 		}
 	}
 }
@@ -66,7 +68,7 @@ function onPlayerBallKickHandler ( player ) {
 		// room.sendAnnouncement( "[2] " + player.name + " kick the ball." ); // DEBUG
 		playersThatTouchedTheBall.unshift( player.id );
 	}
-	room.triggerEvent("onPlayerTouchTheBall", player.id );
+	room.triggerEvent("onPlayerTouchTheBall", player.id, "onPlayerBallKick" );
 }
 
 function onPositionsResetHandler () {
