@@ -123,7 +123,7 @@ function onBallLeft ( ball ) {
 
 function onBallJoin ( ball ) {
   if ( badServe ) return;
-  if ( ball.x < currentMap.width && ball.x > -currentMap.width ) {
+  if ( lastBallPosition.x < currentMap.width && lastBallPosition.x > -currentMap.width ) {
     if ( !kickBallBehindTheLine ) {
       room.sendAnnouncement(`𝐌𝐚𝐥 𝐬𝐚𝐜𝐚𝐝𝐨`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
       badServe = true;
@@ -138,13 +138,15 @@ function onBallJoin ( ball ) {
 
 function onBallIsOut ( ball ) {
   if ( badServe ) return;
-  if ( kickBallBehindTheLine ) {
-    if ( Math.sqrt( Math.pow( ball.x - lastBallPosition.x, 2 ) + Math.pow( ball.y - lastBallPosition.y, 2 ) ) >= config.tolerance ) {
-      room.sendAnnouncement(`𝐌𝐚𝐥 𝐬𝐚𝐜𝐚𝐝𝐨`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
-      badServe = true;
-      kickBallBehindTheLine = false;
-      teamThatShouldKick = teamThatShouldKick == 1 ? 2 : 1;
-      returnBall( teamThatShouldKick );
+  if ( lastBallPosition.x < currentMap.width && lastBallPosition.x > -currentMap.width ) {
+    if ( kickBallBehindTheLine ) {
+      if ( Math.sqrt( Math.pow( ball.x - lastBallPosition.x, 2 ) + Math.pow( ball.y - lastBallPosition.y, 2 ) ) >= config.tolerance ) {
+        room.sendAnnouncement(`𝐌𝐚𝐥 𝐬𝐚𝐜𝐚𝐝𝐨`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
+        badServe = true;
+        kickBallBehindTheLine = false;
+        teamThatShouldKick = teamThatShouldKick == 1 ? 2 : 1;
+        returnBall( teamThatShouldKick );
+      }
     }
   }
 }
@@ -189,7 +191,7 @@ function onPlayerTouchTheBallHandler ( playerId, eventName ) {
   if ( badServe ) return;
   if ( isBallOutsideStadium ) {
     let ballPosition = room.getBallPosition();
-    if ( ballPosition.x < currentMap.width && ballPosition.x > -currentMap.width ) {
+    if ( lastBallPosition.x < currentMap.width && lastBallPosition.x > -currentMap.width ) {
       let player = room.getPlayer( playerId );
       if ( player.team != teamThatShouldKick ) {
         room.sendAnnouncement(`𝐅𝐚𝐥𝐭𝐚 ${player.name} 📒`, undefined, { prefix: `❕`, color : colors.orange, style : "bold", sound : 1 });
