@@ -13,6 +13,9 @@ room.pluginSpec = {
       'before': [`sav/cron`],
       'after': [`rojo/ball-touch`],
     },
+    'onPlayerBallKick': {
+      'after': [`rub/ball-touch`],
+    },
   },
   incompatible_with: [],
 };
