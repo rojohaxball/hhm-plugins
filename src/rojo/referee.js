@@ -43,7 +43,8 @@ const colors = {
   defblue : 0x5689e5,
   red : 0xff0000,
   blue : 0x0000ff,
-  white : 0xffffff
+  white : 0xffffff,
+  orange : 0xff8f43,
 };
 
 const Team = {
