@@ -173,8 +173,8 @@ function checkBallPosition () {
 }
 
 function returnBall ( team ) {
-  room.setDiscProperties( 0, lastBallPosition );
   setTimeout( () => { 
+    room.setDiscProperties( 0, lastBallPosition );
     if ( team == Team.BLUE ) {
       room.sendAnnouncement(`𝐋𝐚𝐭𝐞𝐫𝐚𝐥 𝐝𝐞𝐥 𝐁𝐥𝐮𝐞 🔵`, undefined, { prefix: `𝐁`, color : colors.defblue, style : "bold", sound : 1 });
       room.setDiscProperties( 0, { color : colors.blue } );
