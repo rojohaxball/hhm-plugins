@@ -50,6 +50,7 @@ function onGameTickHandler () {
 				playersThatTouchedTheBall.splice(playersThatTouchedTheBall.indexOf(player.id), 1);
 				playersThatTouchedTheBall.unshift(player.id);
 			}
+			room.triggerEvent("onPlayerTouchTheBall", playersThatTouchedTheBall[0] );
 		}
 	}
 }
@@ -65,6 +66,7 @@ function onPlayerBallKickHandler ( player ) {
 		// room.sendAnnouncement( "[2] " + player.name + " kick the ball." ); // DEBUG
 		playersThatTouchedTheBall.unshift( player.id );
 	}
+	room.triggerEvent("onPlayerTouchTheBall", player.id );
 }
 
 function onPositionsResetHandler () {
