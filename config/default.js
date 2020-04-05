@@ -37,8 +37,8 @@ HHM.config.room = {
   // playerName : `host`,
   maxPlayers: 30,
   noPlayer: true,
-  public : false,
-  // password: `voxed`,
+  public : true,
+  // password: `password here`,
   geo: {"code": "AR", "lat" : -34.5734283, "lon" : -58.4560351},
   // token: `insert your token here`
 };
