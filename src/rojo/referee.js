@@ -125,7 +125,7 @@ function onBallJoin ( ball ) {
   if ( badServe ) return;
   if ( ball.x < currentMap.width && ball.x > -currentMap.width ) {
     if ( !kickBallBehindTheLine ) {
-      room.sendAnnouncement(`Mal sacado`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
+      room.sendAnnouncement(`𝐌𝐚𝐥 𝐬𝐚𝐜𝐚𝐝𝐨`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
       badServe = true;
       teamThatShouldKick = teamThatShouldKick == 1 ? 2 : 1;
       returnBall( teamThatShouldKick );
@@ -140,7 +140,7 @@ function onBallIsOut ( ball ) {
   if ( badServe ) return;
   if ( kickBallBehindTheLine ) {
     if ( Math.sqrt( Math.pow( ball.x - lastBallPosition.x, 2 ) + Math.pow( ball.y - lastBallPosition.y, 2 ) ) >= config.tolerance ) {
-      room.sendAnnouncement(`Mal sacado`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
+      room.sendAnnouncement(`𝐌𝐚𝐥 𝐬𝐚𝐜𝐚𝐝𝐨`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
       badServe = true;
       kickBallBehindTheLine = false;
       teamThatShouldKick = teamThatShouldKick == 1 ? 2 : 1;
@@ -192,7 +192,7 @@ function onPlayerTouchTheBallHandler ( playerId, eventName ) {
     if ( ballPosition.x < currentMap.width && ballPosition.x > -currentMap.width ) {
       let player = room.getPlayer( playerId );
       if ( player.team != teamThatShouldKick ) {
-        room.sendAnnouncement(`Falta ${player.name} 📒`, undefined, { prefix: `❕`, color : colors.orange, style : "bold", sound : 1 });
+        room.sendAnnouncement(`𝐅𝐚𝐥𝐭𝐚 ${player.name} 📒`, undefined, { prefix: `❕`, color : colors.orange, style : "bold", sound : 1 });
         room.setPlayerTeam( player.id, 0 );
         room.setPlayerTeam( player.id, (teamThatShouldKick == 1 ? 2 : 1) );
         badServe = true;
@@ -200,7 +200,7 @@ function onPlayerTouchTheBallHandler ( playerId, eventName ) {
       }
       else if ( player.team == teamThatShouldKick ) {
         if ( kickBallBehindTheLine && lastPlayerThatTouchTheBall.id != player.id ) {
-          room.sendAnnouncement(`Mal sacado`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
+          room.sendAnnouncement(`𝐌𝐚𝐥 𝐬𝐚𝐜𝐚𝐝𝐨`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
           badServe = true;
           teamThatShouldKick = teamThatShouldKick == 1 ? 2 : 1;
           returnBall( teamThatShouldKick );
@@ -210,7 +210,7 @@ function onPlayerTouchTheBallHandler ( playerId, eventName ) {
           kickBallBehindTheLine = true;
         }
         else if ( Math.sqrt( Math.pow( ballPosition.x - lastBallPosition.x, 2 ) + Math.pow( ballPosition.y - lastBallPosition.y, 2 ) ) >= config.tolerance ) {
-          room.sendAnnouncement(`Mal sacado`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
+          room.sendAnnouncement(`𝐌𝐚𝐥 𝐬𝐚𝐜𝐚𝐝𝐨`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
           badServe = true;
           teamThatShouldKick = teamThatShouldKick == 1 ? 2 : 1;
           returnBall( teamThatShouldKick );
