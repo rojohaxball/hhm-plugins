@@ -62,8 +62,6 @@ function isOutsideStadium ( ballPosition ) {
 function checkBallPosition () {
   let ball = room.getDiscProperties(0);
   let ballPosition = { x : ball.x, y : ball.y };
-  if ( ballPosition.x > currentMap.width && ballPosition.x < -currentMap.width ) kickBallBehindTheLine = true;
-  else kickBallBehindTheLine = false;
   if ( isOutsideStadium( ballPosition ) ) {
     if ( !isBallOutsideStadium ) {
       isBallOutsideStadium = true;
@@ -113,10 +111,6 @@ function checkBallPosition () {
     isBallOutsideStadium = false;
     // clearInterval( temp );
     room.setDiscProperties( 0, { color : colors.white } );
-    if ( !kickBallBehindTheLine ) {
-      
-    }
-    kickBallBehindTheLine = false;
   }
   return true;
 }
@@ -139,14 +133,7 @@ function onStadiumChangeHandler ( newStadiumName, byPlayer ) {
   }
 }
 
-function onPlayerBallKickHandler () {
-  if ( isBallOutsideStadium ) {
-    kickBallBehindTheLine = true;
-  }
-}
-
 room.onRoomLink = function onRoomLink () {
   room.onStadiumChange = onStadiumChangeHandler;
   room.onGameTick = onGameTickHandler;
-  room.onPlayerBallKick = onPlayerBallKickHandler;
 }
