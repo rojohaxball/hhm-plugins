@@ -4,6 +4,15 @@ room.pluginSpec = {
   name: `rojo/ball-touch`,
   author: `rojo`,
   version: `1.0.0`,
+  config: {},
+  configDescriptions: {},
+  dependencies: [],
+  order: {
+    'onGameTick': {
+      'before': [`sav/cron`],
+    },
+  },
+  incompatible_with: [],
 };
 
 var playersThatTouchedTheBall = [];
