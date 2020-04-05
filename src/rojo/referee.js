@@ -9,7 +9,10 @@ room.pluginSpec = {
     `rojo/ball-touch`,
   ],
   order: {
-    'after': [`rojo/ball-touch`],
+    'onGameTick': {
+      'before': [`sav/cron`],
+      'after': [`rojo/ball-touch`],
+    },
   },
   incompatible_with: [],
 };
@@ -74,14 +77,14 @@ function checkBallPosition () {
         room.setDiscProperties( 0, { color : colors.red } );
       }
       else if ( currentMap.rules.corner && ballPosition.x > currentMap.width && lastPlayerThatTouchTheBall.team == Team.BLUE ) {
-        if ( ballPosition.y > currentMap.goalLine.y ) room.setDiscProperties( 0, { x : inv_fun_x.x * ball.radius + currentMap.corner.x, y : inv_fun_x.y * ball.radius + currentMap.corner.y} );
-        else if ( ballPosition.y < -currentMap.goalLine.y ) room.setDiscProperties( 0, { x : -fun_x.x * ball.radius + currentMap.corner.x, y : -fun_x.y * ball.radius - currentMap.corner.y} );
+        if ( ballPosition.y > currentMap.goalLine.y ) room.setDiscProperties( 0, { x : inv_fun_x.x * ball.radius * 2 * Math.sqrt( 2 ) + currentMap.corner.x, y : inv_fun_x.y * ball.radius * 2 * Math.sqrt( 2 ) + currentMap.corner.y} );
+        else if ( ballPosition.y < -currentMap.goalLine.y ) room.setDiscProperties( 0, { x : -fun_x.x * ball.radius * 2 * Math.sqrt( 2 ) + currentMap.corner.x, y : -fun_x.y * ball.radius * 2 * Math.sqrt( 2 ) - currentMap.corner.y} );
         room.sendAnnouncement(`𝐂𝐨𝐫𝐧𝐞𝐫`, undefined, { prefix: `🚩`, color : colors.defred, style : "bold", sound : 1 });
         room.setDiscProperties( 0, { color : colors.red } );
       }
       else if ( currentMap.rules.corner && ballPosition.x < -currentMap.width && lastPlayerThatTouchTheBall.team == Team.RED ) {
-        if ( ballPosition.y > currentMap.goalLine.y ) room.setDiscProperties( 0, { x : fun_x.x * ball.radius - currentMap.corner.x, y : fun_x.y * ball.radius + currentMap.corner.y} );
-        else if ( ballPosition.y < -currentMap.goalLine.y ) room.setDiscProperties( 0, { x : -inv_fun_x.x * ball.radius - currentMap.corner.x, y : -inv_fun_x.y * ball.radius - currentMap.corner.y} );
+        if ( ballPosition.y > currentMap.goalLine.y ) room.setDiscProperties( 0, { x : fun_x.x * ball.radius * 2 * Math.sqrt( 2 ) - currentMap.corner.x, y : fun_x.y * ball.radius * 2 * Math.sqrt( 2 ) + currentMap.corner.y} );
+        else if ( ballPosition.y < -currentMap.goalLine.y ) room.setDiscProperties( 0, { x : -inv_fun_x.x * ball.radius * 2 * Math.sqrt( 2 ) - currentMap.corner.x, y : -inv_fun_x.y * ball.radius * 2 * Math.sqrt( 2 ) - currentMap.corner.y} );
         room.sendAnnouncement(`𝐂𝐨𝐫𝐧𝐞𝐫`, undefined, { prefix: `🚩`, color : colors.defblue, style : "bold", sound : 1 });
         room.setDiscProperties( 0, { color : colors.blue } );
       }
