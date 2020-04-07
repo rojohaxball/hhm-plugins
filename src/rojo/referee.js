@@ -162,13 +162,16 @@ function returnBall ( team ) {
     room.sendAnnouncement(`𝐋𝐚𝐭𝐞𝐫𝐚𝐥 𝐝𝐞𝐥 𝐑𝐞𝐝 🔴`, undefined, { prefix: `𝐑`, color : colors.defred, style : "bold", sound : 1 });
     room.setDiscProperties( 0, { color : colors.red } );
   }
+  console.log( `[DEBUG] RETURN BALL` ); // DEBUG
 }
 
 function asd () {
   if ( states.BAD_SERVE ) {
     teamThatShouldKick = teamThatShouldKick == 1 ? 2 : 1;
     room.sendAnnouncement(`𝐌𝐚𝐥 𝐬𝐚𝐜𝐚𝐝𝐨`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
+    returnBall( teamThatShouldKick );
     console.log( `[DEBUG] PROCESING BAD SERVE` ); // DEBUG
+    states.BAD_SERVE = false;
   }
   else if ( states.FOUL ) {
     let player = {...states.FOUL};
@@ -176,12 +179,11 @@ function asd () {
     room.setPlayerTeam( player.id, player.team );
     room.sendAnnouncement(`𝐅𝐚𝐥𝐭𝐚 ${player.name} 📒`, undefined, { prefix: `❕`, color : colors.orange, style : "bold", sound : 1 });
     /*...*/
+    returnBall( teamThatShouldKick );
     console.log( `[DEBUG] PROCESING FOUL` ); // DEBUG
+    states.FOUL = false;
   }
   kickBallBehindTheLine = false;
-  returnBall( teamThatShouldKick );
-  states.BAD_SERVE = false;
-  states.FOUL = false;
   lastPlayerThatTouchTheBall = false;
 }
 
@@ -198,8 +200,6 @@ function onBallJoin( ball ) {
     kickBallBehindTheLine = false;
     lastPlayerThatTouchTheBall = false;
     state = states.IN_GAME;
-    states.BAD_SERVE = false;
-    states.FOUL = false;
     console.log( `[DEBUG] BALL IN GAME` ); // DEBUG
   }
 }
