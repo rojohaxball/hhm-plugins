@@ -39,7 +39,7 @@ let playerRadius = room.getPlayerDiscProperties(player.id).radius;
 let triggerDistance = ballRadius + playerRadius + 0.01;
 let distanceToBall = pointDistance(player.position, ballPosition);
 let hadTouchedTheBall = playersThatTouchedTheBall.some((element) => element == player.id);
-		
+
 if ( playersThatTouchedTheBall.length > 3 ) playersThatTouchedTheBall.pop();
 // This check is here so that the event is only notified the first game tick in which the player is touching the ball.
 if ( distanceToBall < triggerDistance ) {
