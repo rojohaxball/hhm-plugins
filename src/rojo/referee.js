@@ -210,7 +210,8 @@ function onPlayerTouchTheBallHandler ( player, kick ) {
   else if ( state == states.THROW_IN ) {
     if ( player.team != teamThatShouldKick ) {
       // room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` ); // DEBUG
-      if ( kick ) states.FOUL = player;
+      if ( kickBallBefore ) states.FOUL = player;
+      else if ( kick ) states.FOUL = player;
     }
     else if ( player.team == teamThatShouldKick ) {
       if ( kickBallBefore && kickBallBefore.id != player.id ) {
