@@ -241,6 +241,7 @@ function onPlayerTouchTheBallHandler ( player, event ) {
 
 function onGameTickHandler () {
   checkBallPosition();
+  if ( customRSMap ) console.log( `[DEBUG] customRSMap onGameTick` );
 }
 
 function onGameStartHandler () {
@@ -275,7 +276,7 @@ function onStadiumChangeHandler ( newStadiumName, byPlayer ) {
 
 room.onRoomLink = function onRoomLink () {
   room.onStadiumChange = onStadiumChangeHandler;
-  room.onGameTick = () => customRSMap ? onGameTickHandler : { console.log ( '[DEBUG] customRSMap false' ) };
+  room.onGameTick = () => customRSMap ? onGameTickHandler : {};
   room.onPlayerTouchTheBall = () => customRSMap ? onPlayerTouchTheBallHandler : {};
   room.onPositionsReset = () => customRSMap ? onPositionsResetHandler : {};
   room.onGameStop = () => customRSMap ? onGameStopHandler : {};
