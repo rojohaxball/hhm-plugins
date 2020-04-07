@@ -42,7 +42,6 @@ let states = {
   BAD_SERVE : false,
 }
 
-let lastPlayerThatTouchTheBall;
 let teamThatShouldKick;
 let lastBallPosition;
 
@@ -184,7 +183,6 @@ function asd () {
     states.FOUL = false;
   }
   kickBallBehindTheLine = false;
-  lastPlayerThatTouchTheBall = false;
 }
 
 function onBallJoin( ball ) {
@@ -198,7 +196,6 @@ function onBallJoin( ball ) {
   if ( !states.BAD_SERVE ) {
     room.setDiscProperties( 0, { color : colors.white } );
     kickBallBehindTheLine = false;
-    lastPlayerThatTouchTheBall = false;
     state = states.IN_GAME;
     console.log( `[DEBUG] BALL IN GAME` ); // DEBUG
   }
@@ -215,7 +212,7 @@ function onBallIsOut( ball ) {
 
 function checkBallPosition () {
   if ( state != states.KICK_OFF & states.IN_GOAL ) {
-    if ( states.BAD_SERVE || states.FOUL ) setTimeout( () => { return asd()/*...*/; },50 );
+    if ( states.BAD_SERVE || states.FOUL ) return asd()/*...*/;
     let ball = room.getDiscProperties(0);
     if ( isOutsideStadium( ball ) ) {
       if ( state == states.IN_GAME ) onBallLeft( ball );
@@ -239,13 +236,12 @@ function onPlayerTouchTheBallHandler ( player, event ) {
       console.log( `[DEBUG] FOUL` ); // DEBUG
     }
     else if ( player.team == teamThatShouldKick ) {
-      if ( kickBallBehindTheLine && lastPlayerThatTouchTheBall.id != player.id ) {
+      if ( kickBallBehindTheLine && kickBallBehindTheLine.id != player.id ) {
         states.BAD_SERVE = true;
         console.log( `[DEBUG] BAD SERVER ( onPlayerTouchTheBallHandler )` ); // DEBUG
       }
       else if ( event == 'onPlayerBallKick') {
-        lastPlayerThatTouchTheBall = player;
-        kickBallBehindTheLine = true;
+        kickBallBehindTheLine = player;
         console.log( `[DEBUG] PLAYER KICK THE BALL BEHING THE LINE` ); // DEBUG
       }
     }
