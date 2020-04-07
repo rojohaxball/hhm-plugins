@@ -168,9 +168,9 @@ function asd () {
   if ( states.BAD_SERVE ) {
     teamThatShouldKick = teamThatShouldKick == 1 ? 2 : 1;
     room.sendAnnouncement(`𝐌𝐚𝐥 𝐬𝐚𝐜𝐚𝐝𝐨`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
-    returnBall( teamThatShouldKick );
     console.log( `[DEBUG] PROCESING BAD SERVE` ); // DEBUG
-    states.BAD_SERVE = false;
+    returnBall( teamThatShouldKick );
+    setTimeout ( () => { states.BAD_SERVE = false; }, 100 );
   }
   else if ( states.FOUL ) {
     let player = {...states.FOUL};
@@ -178,9 +178,9 @@ function asd () {
     room.setPlayerTeam( player.id, player.team );
     room.sendAnnouncement(`𝐅𝐚𝐥𝐭𝐚 ${player.name} 📒`, undefined, { prefix: `❕`, color : colors.orange, style : "bold", sound : 1 });
     /*...*/
-    returnBall( teamThatShouldKick );
     console.log( `[DEBUG] PROCESING FOUL` ); // DEBUG
-    states.FOUL = false;
+    returnBall( teamThatShouldKick );
+    setTimeout ( () => { states.FOUL = false; }, 100 );
   }
   kickBallBehindTheLine = false;
 }
