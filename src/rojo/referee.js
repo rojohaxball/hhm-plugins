@@ -143,7 +143,7 @@ function returnBall () {
     }, 100 );
   }
   else if ( state == states.THROW_IN ) {
-    console.log ( `[DEBUG] ball state : 'THROW_IN'` );
+    // console.log ( `[DEBUG] ball state : 'THROW_IN'` ); // DEBUG
   }
 }
 
