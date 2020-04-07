@@ -230,7 +230,7 @@ function onPlayerTouchTheBallHandler ( player, event ) {
       if ( kickBallBehindTheLine && lastPlayerThatTouchTheBall.id != player.id ) {
         states.BAD_SERVE = true;
       }
-      else if ( event == 'onPlayerKick') {
+      else if ( event == 'onPlayerBallKick') {
         lastPlayerThatTouchTheBall = player;
         kickBallBehindTheLine = true;
       }
