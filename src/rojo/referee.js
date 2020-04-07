@@ -297,3 +297,13 @@ room.onRoomLink = function onRoomLink () {
   room.onTeamGoal = onTeamGoalHandler;
 }
 
+function onHhmEventHandler(args) {
+  if (args.plugin) {
+    args.plugin = args.plugin.getName();
+  }
+
+  console.log(args);
+}
+
+room.onHhm = onHhmEventHandler;
+
