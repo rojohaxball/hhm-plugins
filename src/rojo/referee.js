@@ -131,6 +131,8 @@ function checkBallPosition () {
   }
 }
 
+let kickBallBefore = false;
+
 function onPlayerTouchTheBallHandler ( player, event ) {
   if ( !customRSMap ) return;
   if ( state == states.KICK_OFF ) {
@@ -146,7 +148,7 @@ function onPlayerTouchTheBallHandler ( player, event ) {
     if ( player.team != teamThatShouldKick ) {
       room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` );
       states.FOUL = true;
-		}
+    }
     else if ( player.team == teamThatShouldKick ) {
       if ( kickBallBefore ) {
         room.sendAnnouncement( `[DEBUG] ${player.name} touch the ball` );
@@ -175,6 +177,7 @@ function onGameTickHandler () {
         room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : false` );
         states.FOUL = false;
         flag = false;
+        kickBallBefore = false;
       }, 100 );
     }
   }
@@ -187,6 +190,7 @@ function onGameTickHandler () {
         room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : false` );
         states.BAD_SERVE = false;
         flag = false;
+        kickBallBefore = false;
       }, 100 );
     }
   }
