@@ -37,7 +37,7 @@ HHM.config.room = {
   // playerName : `host`,
   maxPlayers: 30,
   noPlayer: true,
-  public : true,
+  public : false,
   // password: `password here`,
   geo: {"code": "AR", "lat" : -34.5734283, "lon" : -58.4560351},
   // token: `insert your token here`
@@ -147,7 +147,7 @@ HHM.config.repositories = [
   {
     type: `github`,
     repository: `rojohaxball/hhm-plugins`,
-	version: `master`,
+	version: `test17`,
   },
 ];
 
