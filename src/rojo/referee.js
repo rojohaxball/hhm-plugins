@@ -219,6 +219,7 @@ function checkBallPosition () {
 }
 
 function onPlayerTouchTheBallHandler ( player, event ) {
+  if ( !customRSMap ) return;
   if ( state == states.KICK_OFF ) state = states.IN_GAME;
   // if ( state != states.IN_GAME ) do something..
   if ( state == states.IN_GAME ) console.log ( '[DEBUG] onPlayerTouchTheBallHandler states.IN_GAME' ); // DEBUG
@@ -240,23 +241,28 @@ function onPlayerTouchTheBallHandler ( player, event ) {
 }
 
 function onGameTickHandler () {
-  checkBallPosition();
+  if ( !customRSMap ) return;
   if ( customRSMap ) console.log( `[DEBUG] customRSMap onGameTick` );
+  checkBallPosition();
 }
 
 function onGameStartHandler () {
+  if ( !customRSMap ) return;
   state = states.KICK_OFF;
 }
 
 function onGameStopHandler () {
+  if ( !customRSMap ) return;
   state = states.KICK_OFF;
 }
 
 function onTeamGoalHandler ( team ) {
+  if ( !customRSMap ) return;
   state = states.IN_GOAL;
 }
 
 function onPositionsResetHandler () {
+  if ( !customRSMap ) return;
   state = states.KICK_OFF;
 }
 
@@ -276,10 +282,11 @@ function onStadiumChangeHandler ( newStadiumName, byPlayer ) {
 
 room.onRoomLink = function onRoomLink () {
   room.onStadiumChange = onStadiumChangeHandler;
-  room.onGameTick = customRSMap ? onGameTickHandler : {};
-  room.onPlayerTouchTheBall = customRSMap ? onPlayerTouchTheBallHandler : {};
-  room.onPositionsReset = customRSMap ? onPositionsResetHandler : {};
-  room.onGameStop = customRSMap ? onGameStopHandler : {};
-  room.onGameStart = customRSMap ? onGameStartHandler : {};
+  room.onGameTick = onGameTickHandler;
+  room.onPlayerTouchTheBall = onPlayerTouchTheBallHandler;
+  room.onPositionsReset = onPositionsResetHandler;
+  room.onGameStop =  onGameStopHandler;
+  room.onGameStart = onGameStartHandler;
+  room.onTeamGoal = onTeamGoalHandler;
 }
 
