@@ -149,6 +149,7 @@ function onBallLeft ( ball ) {
 
   lastBallPosition = Object.assign( {}, ball, ballPosition, { xspeed : 0, yspeed : 0 } );
   setBallProperties( lastBallPosition );
+  console.log( `[DEBUG] BALL IS OUTSIDE` ); // DEBUG
 }
 
 function returnBall ( team ) {
@@ -167,6 +168,7 @@ function asd () {
   if ( states.BAD_SERVE ) {
     teamThatShouldKick = teamThatShouldKick == 1 ? 2 : 1;
     room.sendAnnouncement(`𝐌𝐚𝐥 𝐬𝐚𝐜𝐚𝐝𝐨`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
+    console.log( `[DEBUG] PROCESING BAD SERVE` ); // DEBUG
   }
   else if ( states.FOUL ) {
     let player = {...states.FOUL};
@@ -174,6 +176,7 @@ function asd () {
     room.setPlayerTeam( player.id, player.team );
     room.sendAnnouncement(`𝐅𝐚𝐥𝐭𝐚 ${player.name} 📒`, undefined, { prefix: `❕`, color : colors.orange, style : "bold", sound : 1 });
     /*...*/
+    console.log( `[DEBUG] PROCESING FOUL` ); // DEBUG
   }
   kickBallBehindTheLine = false;
   returnBall( teamThatShouldKick );
@@ -187,6 +190,7 @@ function onBallJoin( ball ) {
   if ( state == states.THROW_IN ) {
     if ( !kickBallBehindTheLine ) {
       states.BAD_SERVE = true;
+      console.log( `[DEBUG] BAD SERVER ( onBallJoin )` ); // DEBUG
     }
   }
   if ( !states.BAD_SERVE ) {
@@ -196,6 +200,7 @@ function onBallJoin( ball ) {
     state = states.IN_GAME;
     states.BAD_SERVE = false;
     states.FOUL = false;
+    console.log( `[DEBUG] BALL IN GAME` ); // DEBUG
   }
 }
 
@@ -203,6 +208,7 @@ function onBallIsOut( ball ) {
   if ( state == states.THROW_IN ) {
     if ( Math.sqrt( Math.pow( ball.x - lastBallPosition.x, 2 ) + Math.pow( ball.y - lastBallPosition.y, 2 ) ) >= config.tolerance ) {
       states.BAD_SERVE = true;
+      console.log( `[DEBUG] BAD SERVER ( onBallIsOut )` ); // DEBUG
     }
   }
 }
@@ -229,14 +235,17 @@ function onPlayerTouchTheBallHandler ( player, event ) {
   else if ( state == states.THROW_IN ) {
     if ( player.team != teamThatShouldKick ) {
       states.FOUL = player;
+      console.log( `[DEBUG] FOUL` ); // DEBUG
     }
     else if ( player.team == teamThatShouldKick ) {
       if ( kickBallBehindTheLine && lastPlayerThatTouchTheBall.id != player.id ) {
         states.BAD_SERVE = true;
+        console.log( `[DEBUG] BAD SERVER ( onPlayerTouchTheBallHandler )` ); // DEBUG
       }
       else if ( event == 'onPlayerBallKick') {
         lastPlayerThatTouchTheBall = player;
         kickBallBehindTheLine = true;
+        console.log( `[DEBUG] PLAYER KICK THE BALL BEHING THE LINE` ); // DEBUG
       }
     }
   }
