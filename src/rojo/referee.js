@@ -82,7 +82,7 @@ function isOutsideStadium ( ball ) {
 
 function setBallProperties ( ball ) {
   let color;
-  if ( states.CORNER_KICK ) {
+  if ( state = states.CORNER_KICK ) {
     if ( teamThatShouldKick == Team.RED ) {
       color = colors.red;
       room.sendAnnouncement(`𝐂𝐨𝐫𝐧𝐞𝐫`, undefined, { prefix: `🚩`, color : colors.defred, style : "bold", sound : 1 });
@@ -92,7 +92,7 @@ function setBallProperties ( ball ) {
       room.sendAnnouncement(`𝐂𝐨𝐫𝐧𝐞𝐫`, undefined, { prefix: `🚩`, color : colors.defblue, style : "bold", sound : 1 });
     }
   }
-  if ( states.GOAL_KICK ) {
+  if ( state = states.GOAL_KICK ) {
     if ( teamThatShouldKick == Team.RED ) {
       color = colors.red;
       room.sendAnnouncement(`𝐒𝐚𝐪𝐮𝐞 𝐝𝐞 𝐚𝐫𝐜𝐨`, undefined, { prefix: `⚽`, color : colors.defred, style : "bold", sound : 1 });
@@ -102,7 +102,7 @@ function setBallProperties ( ball ) {
       room.sendAnnouncement(`𝐒𝐚𝐪𝐮𝐞 𝐝𝐞 𝐚𝐫𝐜𝐨`, undefined, { prefix: `⚽`, color : colors.defblue, style : "bold", sound : 1 });
     }
   }
-  if ( states.THROW_IN ) {
+  if ( state = states.THROW_IN ) {
     if ( teamThatShouldKick == Team.RED ) {
       color = colors.red;
       room.sendAnnouncement(`𝐋𝐚𝐭𝐞𝐫𝐚𝐥 𝐝𝐞𝐥 𝐁𝐥𝐮𝐞 🔵`, undefined, { prefix: `𝐁`, color : colors.defblue, style : "bold", sound : 1 });
