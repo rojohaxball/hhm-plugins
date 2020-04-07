@@ -210,10 +210,11 @@ function onPlayerTouchTheBallHandler ( player, kick ) {
   else if ( state == states.THROW_IN ) {
     if ( player.team != teamThatShouldKick ) {
       // room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` ); // DEBUG
-      states.FOUL = player;
+      if ( kick ) states.FOUL = player;
     }
     else if ( player.team == teamThatShouldKick ) {
       if ( kickBallBefore && kickBallBefore.id != player.id ) {
+        lastBallPosition.x = player.position.x;
         // room.sendAnnouncement( `[DEBUG] ${player.name} touch the ball` ); // DEBUG
         // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
         states.BAD_SERVE = true;
