@@ -212,7 +212,7 @@ function onBallIsOut( ball ) {
 
 function checkBallPosition () {
   if ( state != states.KICK_OFF & states.IN_GOAL ) {
-    if ( states.BAD_SERVE || states.FOUL ) return asd()/*...*/;
+    if ( states.BAD_SERVE || states.FOUL ) return;
     let ball = room.getDiscProperties(0);
     if ( isOutsideStadium( ball ) ) {
       if ( state == states.IN_GAME ) onBallLeft( ball );
@@ -229,7 +229,7 @@ function onPlayerTouchTheBallHandler ( player, event ) {
   if ( !customRSMap ) return;
   if ( state == states.KICK_OFF ) state = states.IN_GAME;
   // if ( state != states.IN_GAME ) do something..
-  if ( states.BAD_SERVE || states.FOUL ) return;
+  if ( states.BAD_SERVE || states.FOUL ) return asd()/*...*/;
   else if ( state == states.THROW_IN ) {
     if ( player.team != teamThatShouldKick ) {
       states.FOUL = player;
