@@ -176,6 +176,7 @@ function onBallJoin( ball ) {
   }
   // room.sendAnnouncement( `[DEBUG] ball state : 'IN_GAME'` ); // DEBUG
   state = states.IN_GAME;
+  kickBallBefore = false;
 }
 
 function checkBallPosition () {
