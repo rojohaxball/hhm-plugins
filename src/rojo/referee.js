@@ -221,6 +221,7 @@ function checkBallPosition () {
 function onPlayerTouchTheBallHandler ( player, event ) {
   if ( state == states.KICK_OFF ) state = states.IN_GAME;
   // if ( state != states.IN_GAME ) do something..
+  if ( state == states.IN_GAME ) console.log ( '[DEBUG] onPlayerTouchTheBallHandler states.IN_GAME' ); // DEBUG
   if ( states.BAD_SERVE || states.FOUL ) return;
   else if ( state == states.THROW_IN ) {
     if ( player.team != teamThatShouldKick ) {
@@ -274,7 +275,7 @@ function onStadiumChangeHandler ( newStadiumName, byPlayer ) {
 
 room.onRoomLink = function onRoomLink () {
   room.onStadiumChange = onStadiumChangeHandler;
-  room.onGameTick = () => customRSMap ? onGameTickHandler : {};
+  room.onGameTick = () => customRSMap ? onGameTickHandler : { console.log ( '[DEBUG] customRSMap false' ) };
   room.onPlayerTouchTheBall = () => customRSMap ? onPlayerTouchTheBallHandler : {};
   room.onPositionsReset = () => customRSMap ? onPositionsResetHandler : {};
   room.onGameStop = () => customRSMap ? onGameStopHandler : {};
