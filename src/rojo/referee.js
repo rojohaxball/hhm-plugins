@@ -160,20 +160,34 @@ function onPlayerTouchTheBallHandler ( player, event ) {
   }
 }
 
+let flag = false;
+
 function onGameTickHandler () {
   if ( !customRSMap ) return;
   checkBallPosition();
   if ( states.FOUL ) {
-    room.sendAnnouncement( `[DEBUG] ball is set to 0,0` );
-    room.setDiscProperties( 0, { x : 0, y : 0, xspeed : 0, yspeed : 0} );
-    room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : false` );
-    states.FOUL = false;
+    if ( !flag ) {
+      flag = true;
+      setTimeout( () => {
+        room.sendAnnouncement( `[DEBUG] ball is set to 0,0` );
+        room.setDiscProperties( 0, { x : 0, y : 0, xspeed : 0, yspeed : 0} );
+        room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : false` );
+        states.FOUL = false;
+        flag = false;
+      }, 100 );
+    }
   }
   if ( states.BAD_SERVE ) {
-    room.sendAnnouncement( `[DEBUG] ball is set to 0,0` );
-    room.setDiscProperties( 0, { x : 0, y : 0, xspeed : 0, yspeed : 0} );
-    room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : false` );
-    states.BAD_SERVE = false;
+    if ( !flag ) {
+      flag = true;
+      setTimeout( () => {
+        room.sendAnnouncement( `[DEBUG] ball is set to 0,0` );
+        room.setDiscProperties( 0, { x : 0, y : 0, xspeed : 0, yspeed : 0} );
+        room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : false` );
+        states.BAD_SERVE = false;
+        flag = false;
+      }, 100 );
+    }
   }
 }
 
