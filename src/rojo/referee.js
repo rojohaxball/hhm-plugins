@@ -24,6 +24,7 @@ room.pluginSpec = {
 };
 
 const config = room.getConfig();
+const getLastPlayersWhoTouchedTheBall = room.getPlugin( `rojo/ball-touch` ).getLastPlayersWhoTouchedTheBall;
 
 const fun_x = { x : Math.cos( Math.PI / 4 ), y : Math.sin( Math.PI / 4 ) };
 const inv_fun_x = { x : Math.cos( Math.PI / 4 * 3), y : Math.sin( Math.PI / 4 * 3) };
@@ -85,7 +86,7 @@ function onBallLeft ( ball ) {
     return;
   }
 
-  teamThatShouldKick = room.getPlayer( room.getPlugin( `rojo/ball-touch` ).getLastPlayersWhoTouchedTheBall()[0] ).team == 1 ? 2 : 1;
+  teamThatShouldKick = room.getPlayer( getLastPlayersWhoTouchedTheBall()[0] ).team == 1 ? 2 : 1;
 
   if ( currentMap.rules.goalKick && ball.x > currentMap.width && teamThatShouldKick == Team.BLUE ) {
     if ( ball.y > currentMap.goalLine.y ) Object.assign( ball, { x : currentMap.goalKick.x + ball.radius, y : currentMap.goalKick.y, color : colors.blue, xspeed : 0, yspeed : 0 } );
@@ -159,6 +160,11 @@ function returnBall () {
 function onBallIsOut( ball ) {
   if ( state == states.THROW_IN ) {
     if ( Math.sqrt( Math.pow( ball.x - lastBallPosition.x, 2 ) + Math.pow( ball.y - lastBallPosition.y, 2 ) ) >= config.tolerance ) {
+      let lastPlayerThatTouchTheBall = room.getPlayer( getLastPlayersWhoTouchedTheBall()[0] );
+      if ( !kickBallBefore && lastPlayerThatTouchTheBall.team != teamThatShouldKick ) {
+        states.FOUL = lastPlayerThatTouchTheBall;
+        return;
+      }
       // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
       states.BAD_SERVE = true;
     }
@@ -210,8 +216,7 @@ function onPlayerTouchTheBallHandler ( player, kick ) {
   else if ( state == states.THROW_IN ) {
     if ( player.team != teamThatShouldKick ) {
       // room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` ); // DEBUG
-      if ( kickBallBefore ) states.FOUL = player;
-      else if ( kick ) states.FOUL = player;
+      if ( kickBallBefore || kick ) states.FOUL = player;
     }
     else if ( player.team == teamThatShouldKick ) {
       if ( kickBallBefore && kickBallBefore.id != player.id ) {
