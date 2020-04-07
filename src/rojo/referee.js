@@ -50,8 +50,8 @@ let customRSMap;
 let currentMap;
 
 const colors = {
-  [Team.RED] : 0xe56e56,
-  [Team.BLUE] : 0x5689e5,
+  defred : 0xe56e56,
+  defblue : 0x5689e5,
   red : 0xff0000,
   blue : 0x0000ff,
   white : 0xffffff,
