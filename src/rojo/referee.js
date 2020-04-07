@@ -276,10 +276,10 @@ function onStadiumChangeHandler ( newStadiumName, byPlayer ) {
 
 room.onRoomLink = function onRoomLink () {
   room.onStadiumChange = onStadiumChangeHandler;
-  room.onGameTick = () => ( customRSMap ? onGameTickHandler : {} );
-  room.onPlayerTouchTheBall = () => ( customRSMap ? onPlayerTouchTheBallHandler : {} );
-  room.onPositionsReset = () => ( customRSMap ? onPositionsResetHandler : {} );
-  room.onGameStop = () => ( customRSMap ? onGameStopHandler : {} );
-  room.onGameStart = () => ( customRSMap ? onGameStartHandler : {} );
+  room.onGameTick = customRSMap ? onGameTickHandler : {};
+  room.onPlayerTouchTheBall = customRSMap ? onPlayerTouchTheBallHandler : {};
+  room.onPositionsReset = customRSMap ? onPositionsResetHandler : {};
+  room.onGameStop = customRSMap ? onGameStopHandler : {};
+  room.onGameStart = customRSMap ? onGameStartHandler : {};
 }
 
