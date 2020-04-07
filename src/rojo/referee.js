@@ -170,7 +170,7 @@ function asd () {
     room.sendAnnouncement(`𝐌𝐚𝐥 𝐬𝐚𝐜𝐚𝐝𝐨`, undefined, { prefix: `🚫`, color : colors.orange, style : "bold", sound : 1 });
     console.log( `[DEBUG] PROCESING BAD SERVE` ); // DEBUG
     returnBall( teamThatShouldKick );
-    setTimeout ( () => { states.BAD_SERVE = false; }, 100 );
+    states.BAD_SERVE = false;
   }
   else if ( states.FOUL ) {
     let player = {...states.FOUL};
@@ -180,7 +180,7 @@ function asd () {
     /*...*/
     console.log( `[DEBUG] PROCESING FOUL` ); // DEBUG
     returnBall( teamThatShouldKick );
-    setTimeout ( () => { states.FOUL = false; }, 100 );
+    states.FOUL = false;
   }
   kickBallBehindTheLine = false;
 }
@@ -296,14 +296,3 @@ room.onRoomLink = function onRoomLink () {
   room.onGameStart = onGameStartHandler;
   room.onTeamGoal = onTeamGoalHandler;
 }
-
-function onHhmEventHandler(args) {
-  if (args.plugin) {
-    args.plugin = args.plugin.getName();
-  }
-
-  console.log(args);
-}
-
-room.onHhm = onHhmEventHandler;
-
