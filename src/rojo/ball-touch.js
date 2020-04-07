@@ -26,14 +26,12 @@ function pointDistance ( p1, p2 ){
 }
 
 function onGameTickHandler () {
-  let players = room.getPlayerList();
+  let players = room.getPlayerList().filter( (e) => e.team != 0 );
   let ballPosition = room.getBallPosition();
   let ballRadius = room.getDiscProperties(0).radius;
   for ( let i = 0; i < players.length; i++ ) { // Iterate over all the players
 
     let player = players[i];
-
-    if ( player.position == null ) continue; // Skip players that don't have a position
 
     let playerRadius = room.getPlayerDiscProperties(player.id).radius;
     let triggerDistance = ballRadius + playerRadius + 0.01;
