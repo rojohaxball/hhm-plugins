@@ -193,7 +193,8 @@ function onPlayerTouchTheBallHandler ( player, kick ) {
   }
   else if ( states.BAD_SERVE || states.FOUL ) {
     if ( state == states.THROW_IN ) {
-      room.sendAnnouncement( `[DEBUG] ball state : 'THROW_IN'` );
+      // room.sendAnnouncement( `[DEBUG] ball state : 'THROW_IN'` ); // DEBUG
+      return;
     }
   }
   else if ( state == states.THROW_IN ) {
