@@ -6,6 +6,7 @@ room.pluginSpec = {
   version: `1.0.0`,
   config: {
     tolerance : 100,
+    punishment : true,
   },
   dependencies: [
     `rojo/ball-touch`,
@@ -133,6 +134,7 @@ function returnBall () {
         states.BAD_SERVE = false;
       }
       else if ( states.FOUL ) {
+        if ( config.punishment ) room.setPlayerDiscProperties( states.FOUL.id, { x : 0, y : -lastBallPosition.y } );
         room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : false` );
         states.FOUL = false;
       }
@@ -200,7 +202,7 @@ function onPlayerTouchTheBallHandler ( player, kick ) {
   else if ( state == states.THROW_IN ) {
     if ( player.team != teamThatShouldKick ) {
       room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` );
-      states.FOUL = true;
+      states.FOUL = player;
     }
     else if ( player.team == teamThatShouldKick ) {
       if ( kickBallBefore && kickBallBefore.id != player.id ) {
