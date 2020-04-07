@@ -197,7 +197,7 @@ function onBallJoin( ball ) {
 
 function onBallIsOut( ball ) {
   if ( state == states.THROW_IN ) {
-    if ( Math.sqrt( Math.pow( ballPosition.x - lastBallPosition.x, 2 ) + Math.pow( ballPosition.y - lastBallPosition.y, 2 ) ) >= config.tolerance ) {
+    if ( Math.sqrt( Math.pow( ball.x - lastBallPosition.x, 2 ) + Math.pow( ball.y - lastBallPosition.y, 2 ) ) >= config.tolerance ) {
       states.BAD_SERVE = true;
     }
   }
