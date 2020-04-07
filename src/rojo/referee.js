@@ -80,7 +80,7 @@ function isOutsideStadium ( ball ) {
 function onBallLeft ( ball ) {
 
   if ( ( ball.y < currentMap.goalLine.y && ball.y > -currentMap.goalLine.y ) && ( ball.x > currentMap.width || ball.x < -currentMap.width ) ) {
-    room.sendAnnouncement( `[DEBUG] ball state : 'IN_GOAL'` );
+    // room.sendAnnouncement( `[DEBUG] ball state : 'IN_GOAL'` ); // DEBUG
     state = states.IN_GOAL;
     return;
   }
@@ -90,31 +90,36 @@ function onBallLeft ( ball ) {
   if ( currentMap.rules.goalKick && ball.x > currentMap.width && teamThatShouldKick == Team.BLUE ) {
     if ( ball.y > currentMap.goalLine.y ) Object.assign( ball, { x : currentMap.goalKick.x + ball.radius, y : currentMap.goalKick.y, color : colors.blue, xspeed : 0, yspeed : 0 } );
     else if ( ball.y < -currentMap.goalLine.y ) Object.assign( ball, { x : currentMap.goalKick.x + ball.radius, y : -currentMap.goalKick.y, color : colors.blue, xspeed : 0, yspeed : 0 } );
-    room.sendAnnouncement( `[DEBUG] ball state : 'GOAL_KICK'` );
+    room.sendAnnouncement( `[ARBITRO] SAQUE DE ARCO` );
+    // room.sendAnnouncement( `[DEBUG] ball state : 'GOAL_KICK'` ); // DEBUG
     state = states.GOAL_KICK;
   }
   else if ( currentMap.rules.goalKick && ball.x < -currentMap.width && teamThatShouldKick == Team.RED ) {
     if ( ball.y > currentMap.goalLine.y ) Object.assign( ball, { x : -currentMap.goalKick.x - ball.radius, y : currentMap.goalKick.y, color : colors.red, xspeed : 0, yspeed : 0 } );
     else if ( ball.y < -currentMap.goalLine.y ) Object.assign( ball, { x : -currentMap.goalKick.x - ball.radius, y : -currentMap.goalKick.y, color : colors.red, xspeed : 0, yspeed : 0 } );
-    room.sendAnnouncement( `[DEBUG] ball state : 'GOAL_KICK'` );
+   room.sendAnnouncement( `[ARBITRO] SAQUE DE ARCO` );
+    //  room.sendAnnouncement( `[DEBUG] ball state : 'GOAL_KICK'` ); // DEBUG
     state = states.GOAL_KICK;
   }
   else if ( currentMap.rules.corner && ball.x > currentMap.width && teamThatShouldKick == Team.RED ) {
     if ( ball.y > currentMap.goalLine.y ) Object.assign( ball, { x : inv_fun_x.x * ball.radius * Math.SQRT2 + currentMap.corner.x, y : inv_fun_x.y * ball.radius * Math.SQRT2 + currentMap.corner.y, color : colors.red, xspeed : 0, yspeed : 0 } );
     else if ( ball.y < -currentMap.goalLine.y ) Object.assign( ball, { x : -fun_x.x * ball.radius * Math.SQRT2 + currentMap.corner.x, y : -fun_x.y * ball.radius * Math.SQRT2 - currentMap.corner.y, color : colors.red, xspeed : 0, yspeed : 0 } );
-    room.sendAnnouncement( `[DEBUG] ball state : 'CORNER_KICK'` );
+    room.sendAnnouncement( `[ARBITRO] CORNER` );
+    // room.sendAnnouncement( `[DEBUG] ball state : 'CORNER_KICK'` ); // DEBUG
     state = states.CORNER_KICK;
   }
   else if ( currentMap.rules.corner && ball.x < -currentMap.width && teamThatShouldKick == Team.BLUE ) {
     if ( ball.y > currentMap.goalLine.y ) Object.assign( ball, { x : fun_x.x * ball.radius * Math.SQRT2 - currentMap.corner.x, y : fun_x.y * ball.radius * Math.SQRT2 + currentMap.corner.y, color : colors.blue, xspeed : 0, yspeed : 0 } );
     else if ( ball.y < -currentMap.goalLine.y ) Object.assign( ball, { x : -inv_fun_x.x * ball.radius * Math.SQRT2 - currentMap.corner.x, y : -inv_fun_x.y * ball.radius * Math.SQRT2 - currentMap.corner.y, color : colors.blue, xspeed : 0, yspeed : 0 } );
-    room.sendAnnouncement( `[DEBUG] ball state : 'CORNER_KICK'` );
+    room.sendAnnouncement( `[ARBITRO] CORNER` );
+    // room.sendAnnouncement( `[DEBUG] ball state : 'CORNER_KICK'` ); // DEBUG
     state = states.CORNER_KICK;
     }
   else if ( currentMap.rules.meta ) {
     if ( ball.y > 0 ) Object.assign( ball, { y : currentMap.corner.y - ball.radius, xspeed : 0, yspeed : 0, color : ( teamThatShouldKick == Team.RED ? colors.red : colors.blue ) } );
     else if ( ball.y < 0 ) Object.assign( ball, { y : -currentMap.corner.y + ball.radius, xspeed : 0, yspeed : 0, color : ( teamThatShouldKick == Team.RED ? colors.red : colors.blue ) } );
-    room.sendAnnouncement( `[DEBUG] ball state : 'THROW_IN'` );
+    room.sendAnnouncement( `[ARBITRO] LATERAL` );
+    // room.sendAnnouncement( `[DEBUG] ball state : 'THROW_IN'` ); // DEBUG
     state = states.THROW_IN;
   }
 
@@ -129,16 +134,18 @@ function returnBall () {
     flag = true;
     setTimeout( () => {
       if ( states.BAD_SERVE ) {
+        room.sendAnnouncement( `[ARBITRO] MAL SACADO` );
         teamThatShouldKick = teamThatShouldKick == 1 ? 2 : 1;
-        room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : false` );
+        // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : false` ); // DEBUG
         states.BAD_SERVE = false;
       }
       else if ( states.FOUL ) {
+        room.sendAnnouncement( `[ARBITRO] FALTA ${states.FOUL.id}` );
         if ( config.punishment ) room.setPlayerDiscProperties( states.FOUL.id, { x : 0, y : -lastBallPosition.y } );
-        room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : false` );
+        // room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : false` ); // DEBUG
         states.FOUL = false;
       }
-      room.sendAnnouncement( `[DEBUG] ball is return` );
+      // room.sendAnnouncement( `[DEBUG] ball is return` ); // DEBUG
       room.setDiscProperties( 0, Object.assign( lastBallPosition, { color : ( teamThatShouldKick == Team.RED ? colors.red : colors.blue ) } ) );
       flag = false;
       kickBallBefore = false;
@@ -152,7 +159,7 @@ function returnBall () {
 function onBallIsOut( ball ) {
   if ( state == states.THROW_IN ) {
     if ( Math.sqrt( Math.pow( ball.x - lastBallPosition.x, 2 ) + Math.pow( ball.y - lastBallPosition.y, 2 ) ) >= config.tolerance ) {
-      room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` );
+      // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
       states.BAD_SERVE = true;
     }
   }
@@ -162,12 +169,12 @@ function onBallJoin( ball ) {
   room.setDiscProperties( 0, { color : colors.white } );
   if ( state == states.THROW_IN ) {
     if ( !kickBallBefore ) {
-      room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` );
+      // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
       states.BAD_SERVE = true;
       return;
     }
   }
-  room.sendAnnouncement( `[DEBUG] ball state : 'IN_GAME'` );
+  // room.sendAnnouncement( `[DEBUG] ball state : 'IN_GAME'` ); // DEBUG
   state = states.IN_GAME;
 }
 
@@ -190,7 +197,7 @@ let kickBallBefore = false;
 function onPlayerTouchTheBallHandler ( player, kick ) {
   if ( !customRSMap ) return;
   if ( state == states.KICK_OFF ) {
-    room.sendAnnouncement( `[DEBUG] ball state : 'IN_GAME'` );
+    // room.sendAnnouncement( `[DEBUG] ball state : 'IN_GAME'` ); // DEBUG
     state = states.IN_GAME;
   }
   else if ( states.BAD_SERVE || states.FOUL ) {
@@ -201,17 +208,17 @@ function onPlayerTouchTheBallHandler ( player, kick ) {
   }
   else if ( state == states.THROW_IN ) {
     if ( player.team != teamThatShouldKick ) {
-      room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` );
+      // room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` ); // DEBUG
       states.FOUL = player;
     }
     else if ( player.team == teamThatShouldKick ) {
       if ( kickBallBefore && kickBallBefore.id != player.id ) {
-        room.sendAnnouncement( `[DEBUG] ${player.name} touch the ball` );
-        room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` );
+        // room.sendAnnouncement( `[DEBUG] ${player.name} touch the ball` ); // DEBUG
+        // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
         states.BAD_SERVE = true;
       }
       else if ( kick ) {
-        room.sendAnnouncement( `[DEBUG] ${player.name} kick the ball` );
+        // room.sendAnnouncement( `[DEBUG] ${player.name} kick the ball` ); // DEBUG
         kickBallBefore = player;
       }
     }
@@ -225,19 +232,19 @@ function onGameTickHandler () {
 
 function onGameStartHandler () {
   if ( !customRSMap ) return;
-  room.sendAnnouncement( `[DEBUG] ball state : 'KICK_OFF'` );
+  // room.sendAnnouncement( `[DEBUG] ball state : 'KICK_OFF'` ); // DEBUG
   state = states.KICK_OFF;
 }
 
 function onGameStopHandler () {
   if ( !customRSMap ) return;
-  room.sendAnnouncement( `[DEBUG] ball state : 'KICK_OFF'` );
+  // room.sendAnnouncement( `[DEBUG] ball state : 'KICK_OFF'` ); // DEBUG
   state = states.KICK_OFF;
 }
 
 function onPositionsResetHandler () {
   if ( !customRSMap ) return;
-  room.sendAnnouncement( `[DEBUG] ball state : 'KICK_OFF'` );
+  // room.sendAnnouncement( `[DEBUG] ball state : 'KICK_OFF'` ); // DEBUG
   state = states.KICK_OFF;
 }
 
