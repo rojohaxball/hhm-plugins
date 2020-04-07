@@ -79,6 +79,7 @@ function isOutsideStadium ( ball ) {
 function onBallLeft ( ball ) {
 
   if ( ( ball.y < currentMap.goalLine.y && ball.y > -currentMap.goalLine.y ) && ( ball.x > currentMap.width || ball.x < -currentMap.width ) ) {
+    room.sendAnnouncement( `[DEBUG] ball state : 'IN_GOAL'` );
     state = states.IN_GOAL;
     return; // if the ball passes the goal
   }
