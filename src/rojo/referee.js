@@ -121,11 +121,6 @@ function onBallLeft ( ball ) {
   lastBallPosition = {...ball};
 }
 
-function onBallJoin( ball ) {
-  room.sendAnnouncement( `[DEBUG] ball state : 'IN_GAME'` );
-  state = states.IN_GAME;
-}
-
 let flag = false;
 
 function returnBall () {
@@ -152,12 +147,35 @@ function returnBall () {
   }
 }
 
+function onBallIsOut( ball ) {
+  if ( state == states.THROW_IN ) {
+    if ( Math.sqrt( Math.pow( ball.x - lastBallPosition.x, 2 ) + Math.pow( ball.y - lastBallPosition.y, 2 ) ) >= config.tolerance ) {
+      room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` );
+      states.BAD_SERVE = true;
+    }
+  }
+}
+
+function onBallJoin( ball ) {
+  room.setDiscProperties( 0, { color : colors.white } );
+  if ( state == states.THROW_IN ) {
+    if ( !kickBallBefore ) {
+      room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` );
+      states.BAD_SERVE = true;
+      return;
+    }
+  }
+  room.sendAnnouncement( `[DEBUG] ball state : 'IN_GAME'` );
+  state = states.IN_GAME;
+}
+
 function checkBallPosition () {
   if ( state != states.KICK_OFF & states.IN_GOAL ) {
     if ( states.BAD_SERVE || states.FOUL ) return returnBall();
     let ball = room.getDiscProperties(0);
     if ( isOutsideStadium( ball ) ) {
       if ( state == states.IN_GAME ) onBallLeft( ball );
+      else onBallIsOut( ball );
     }
     else {
       if ( state != states.IN_GAME ) onBallJoin( ball );
@@ -184,14 +202,14 @@ function onPlayerTouchTheBallHandler ( player, kick ) {
       states.FOUL = true;
     }
     else if ( player.team == teamThatShouldKick ) {
-      if ( kickBallBefore ) {
+      if ( kickBallBefore && kickBallBefore.id != player.id ) {
         room.sendAnnouncement( `[DEBUG] ${player.name} touch the ball` );
         room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` );
         states.BAD_SERVE = true;
       }
       else if ( kick ) {
         room.sendAnnouncement( `[DEBUG] ${player.name} kick the ball` );
-        kickBallBefore = true;
+        kickBallBefore = player;
       }
     }
   }
