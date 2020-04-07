@@ -229,6 +229,7 @@ function checkBallPosition () {
 }
 
 function onPlayerTouchTheBallHandler ( player, event ) {
+  if ( !customRSMap ) return;
   if ( state == states.KICK_OFF ) state = states.IN_GAME;
   // if ( state != states.IN_GAME ) do something..
   if ( states.BAD_SERVE || states.FOUL ) return;
