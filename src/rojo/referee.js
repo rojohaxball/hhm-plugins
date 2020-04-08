@@ -6,7 +6,7 @@ room.pluginSpec = {
   version: `1.0.0`,
   config: {
     tolerance : 100,
-    punishment : true,
+    punishment : false,
   },
   dependencies: [
     `rojo/ball-touch`,
