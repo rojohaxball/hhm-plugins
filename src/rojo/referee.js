@@ -162,6 +162,7 @@ function onBallIsOut( ball ) {
     if ( Math.sqrt( Math.pow( ball.x - lastBallPosition.x, 2 ) + Math.pow( ball.y - lastBallPosition.y, 2 ) ) >= config.tolerance ) {
       let lastPlayerThatTouchTheBall = room.getPlayer( getLastPlayersWhoTouchedTheBall()[0] );
       if ( !kickBallBefore && lastPlayerThatTouchTheBall.team != teamThatShouldKick ) {
+        // room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` ); // DEBUG
         states.FOUL = lastPlayerThatTouchTheBall;
         return;
       }
@@ -175,9 +176,17 @@ function onBallJoin( ball ) {
   room.setDiscProperties( 0, { color : colors.white } );
   if ( state == states.THROW_IN ) {
     if ( !kickBallBefore ) {
-      // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
-      states.BAD_SERVE = true;
-      return;
+      let lastPlayerThatTouchTheBall = room.getPlayer( getLastPlayersWhoTouchedTheBall()[0] );
+      if ( lastPlayerThatTouchTheBall.team != teamThatShouldKick ) {
+        // room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` ); // DEBUG
+        states.FOUL = lastPlayerThatTouchTheBall;
+        return;
+      }
+      else {
+        // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
+        states.BAD_SERVE = true;
+        return;
+      }
     }
     else if ( Math.sqrt( Math.pow( ball.xspeed - lastBallPosition.x, 2 ) + Math.pow( ball.yspeed - lastBallPosition.y, 2 ) < 2.5 ) ) {
       // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
