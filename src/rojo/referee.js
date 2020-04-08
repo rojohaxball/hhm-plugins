@@ -5,7 +5,7 @@ room.pluginSpec = {
   author: `rojo`,
   version: `1.0.0`,
   config: {
-    tolerance : 100,
+    tolerance : 50,
     kicktolerance : 300,
     punishment : false,
     forward : true,
