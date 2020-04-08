@@ -179,7 +179,7 @@ function onBallJoin( ball ) {
       states.BAD_SERVE = true;
       return;
     }
-    else if ( Math.sqrt( Math.pow( ball.xspeed - lastBallPosition.x, 2 ) + Math.pow( ball.yspeed - lastBallPosition.y, 2 ) < 2.5 ) {
+    else if ( Math.sqrt( Math.pow( ball.xspeed - lastBallPosition.x, 2 ) + Math.pow( ball.yspeed - lastBallPosition.y, 2 ) < 2.5 ) ) {
       // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
       states.BAD_SERVE = true;
       return;
