@@ -6,7 +6,7 @@ room.pluginSpec = {
   version: `1.0.0`,
   config: {
     tolerance : 50,
-    kicktolerance : 300,
+    distance : 300,
     punishment : false,
     forward : true,
   },
@@ -183,12 +183,8 @@ function onBallIsOut( ball ) {
         // room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` ); // DEBUG
         states.FOUL = lastPlayerThatTouchTheBall;
       }
-      else {
-        // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
-        states.BAD_SERVE = true;
-      }
     }
-    else if ( kickBallBefore && distance >= config.kicktolerance ) {
+    else if ( kickBallBefore && distance >= config.distance ) {
       // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
       states.BAD_SERVE = true;
     }
