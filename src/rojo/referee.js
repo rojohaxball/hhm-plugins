@@ -7,7 +7,7 @@ room.pluginSpec = {
   config: {
     tolerance : 100,
     punishment : false,
-    forward : false,
+    forward : true,
   },
   dependencies: [
     `rojo/ball-touch`,
@@ -256,7 +256,7 @@ function onPlayerTouchTheBallHandler ( player, kick ) {
     }
     else if ( player.team == teamThatShouldKick ) {
       if ( kickBallBefore && kickBallBefore.id != player.id ) {
-        if ( config.forward ) lastBallPosition.x = player.position.x;
+        // if ( config.forward ) lastBallPosition.x = player.position.x;
         // room.sendAnnouncement( `[DEBUG] ${player.name} touch the ball` ); // DEBUG
         // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
         states.BAD_SERVE = true;
