@@ -6,6 +6,7 @@ room.pluginSpec = {
   version: `1.0.0`,
   config: {
     tolerance : 100,
+    kicktolerance : 300,
     punishment : false,
     forward : true,
   },
@@ -175,16 +176,22 @@ function returnBall () {
 
 function onBallIsOut( ball ) {
   if ( state == states.THROW_IN ) {
-    if ( Math.sqrt( Math.pow( ball.x - lastBallPosition.x, 2 ) + Math.pow( ball.y - lastBallPosition.y, 2 ) ) >= config.tolerance ) {
-      let lastPlayerThatTouchTheBall = room.getPlayer( getLastPlayersWhoTouchedTheBall()[0] );
-      if ( !kickBallBefore && lastPlayerThatTouchTheBall.team != teamThatShouldKick ) {
-        // room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` ); // DEBUG
-        states.FOUL = lastPlayerThatTouchTheBall;
-        return;
-      }
-      // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
-      states.BAD_SERVE = true;
+    let lastPlayerThatTouchTheBall = room.getPlayer( getLastPlayersWhoTouchedTheBall()[0] );
+    let distance = Math.sqrt( Math.pow( ball.x - lastBallPosition.x, 2 ) + Math.pow( ball.y - lastBallPosition.y, 2 ) );
+    if ( !kickBallBefore && lastPlayerThatTouchTheBall.team != teamThatShouldKick ) {
+      // room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` ); // DEBUG
+      states.FOUL = lastPlayerThatTouchTheBall;
     }
+    else if ( lastPlayerThatTouchTheBall.team == teamThatShouldKick ) {
+      if ( !kickBallBefore && distance >= config.tolerance ) {
+        // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
+        states.BAD_SERVE = true;
+      }
+      if ( kickBallBefore && distance >= config.kicktolerance ) {
+        // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
+        states.BAD_SERVE = true;
+      }
+    } 
   }
 }
 
