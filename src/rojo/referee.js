@@ -82,6 +82,15 @@ let rs_maps = {
     goalKick : { x : 1190, y : 205 },
     goalLine : { x : 1161.3, y : 124 },
   },
+  rs_2 : {
+    name : "Real Soccer 1.3D by RawR",
+    height : 600,
+    width : 1150,
+    rules : { corner : true, meta : true, goalKick : true },
+    corner : { x : 1214, y : 635 },
+    goalKick : { x : 1190, y : 205 },
+    goalLine : { x : 1160, y : 124 },
+  },
 };
 
 function isOutsideStadium ( ball ) {
