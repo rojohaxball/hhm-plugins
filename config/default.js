@@ -93,6 +93,7 @@ HHM.config.plugins = {
   },
   'hr/spam': {},
   'hr/kickban': {},
+  'rojo/ball-touch': {},
   'rojo/referee': {},
   'rojo/password': {},
   'rojo/record': {},
@@ -147,7 +148,7 @@ HHM.config.repositories = [
   {
     type: `github`,
     repository: `rojohaxball/hhm-plugins`,
-	version: `test17`,
+	version: `test51`,
   },
 ];
 
