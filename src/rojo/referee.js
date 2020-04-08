@@ -160,7 +160,7 @@ function returnBall () {
         states.BAD_SERVE = false;
       }
       else if ( states.FOUL ) {
-        room.sendAnnouncement( `[ARBITRO] FALTA ${states.FOUL.id}` );
+        room.sendAnnouncement( `[ARBITRO] FALTA ${states.FOUL.name}` );
         if ( config.punishment ) room.setPlayerDiscProperties( states.FOUL.id, { x : 0, y : -lastBallPosition.y } );
         // room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : false` ); // DEBUG
         states.FOUL = false;
