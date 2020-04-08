@@ -33,8 +33,8 @@ HHM.config.version = `1.0.0`;
  * room instance to start the plugin system.
  */
 HHM.config.room = {
-  roomName: `JBA vs ????? REAL SOCCER`,
-  // playerName : `host`,
+  roomName: `hhm host name`,
+  // playerName : `bot name`,
   maxPlayers: 30,
   noPlayer: true,
   public : true,
@@ -93,6 +93,7 @@ HHM.config.plugins = {
   },
   'hr/spam': {},
   'hr/kickban': {},
+  'rojo/ball-touch': {},
   'rojo/referee': {},
   'rojo/password': {},
   'rojo/record': {},
@@ -147,7 +148,7 @@ HHM.config.repositories = [
   {
     type: `github`,
     repository: `rojohaxball/hhm-plugins`,
-	version: `master`,
+    version: `master`,
   },
 ];
 
