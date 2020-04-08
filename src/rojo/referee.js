@@ -229,8 +229,11 @@ function onPlayerTouchTheBallHandler ( player, kick ) {
   }
   else if ( state == states.THROW_IN ) {
     if ( player.team != teamThatShouldKick ) {
-      // room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` ); // DEBUG
-      if ( kickBallBefore || kick ) states.FOUL = player;
+      if ( kickBallBefore || kick ) {
+        lastBallPosition.x = player.position.x;
+        // room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` ); // DEBUG
+        states.FOUL = player;
+      }
     }
     else if ( player.team == teamThatShouldKick ) {
       if ( kickBallBefore && kickBallBefore.id != player.id ) {
