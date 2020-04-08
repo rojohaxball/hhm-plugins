@@ -7,6 +7,7 @@ room.pluginSpec = {
   config: {
     tolerance : 100,
     punishment : false,
+    forward : false,
   },
   dependencies: [
     `rojo/ball-touch`,
@@ -71,7 +72,16 @@ let rs_maps = {
     corner : { x : 1214, y : 635 },
     goalKick : { x : 1190, y : 205 },
     goalLine : { x : 1160, y : 124 },
-  }
+  },
+  rs_2 : {
+    name : "[⚽] 𝚁𝙴𝙰𝙻 𝚂𝙾𝙲𝙲𝙴𝚁 1.3D by 𝑅𝑎𝑤𝑅 & 𝐺𝐿𝐻",
+    height : 600,
+    width : 1150,
+    rules : { corner : true, meta : true, goalKick : true },
+    corner : { x : 1214, y : 635 },
+    goalKick : { x : 1190, y : 205 },
+    goalLine : { x : 1161.3, y : 124 },
+  },
 };
 
 function isOutsideStadium ( ball ) {
@@ -230,14 +240,14 @@ function onPlayerTouchTheBallHandler ( player, kick ) {
   else if ( state == states.THROW_IN ) {
     if ( player.team != teamThatShouldKick ) {
       if ( kickBallBefore || kick ) {
-        lastBallPosition.x = player.position.x;
+        if ( config.forward ) lastBallPosition.x = player.position.x;
         // room.sendAnnouncement( `[DEBUG] ball state 'FOUL' : true` ); // DEBUG
         states.FOUL = player;
       }
     }
     else if ( player.team == teamThatShouldKick ) {
       if ( kickBallBefore && kickBallBefore.id != player.id ) {
-        lastBallPosition.x = player.position.x;
+        if ( config.forward ) lastBallPosition.x = player.position.x;
         // room.sendAnnouncement( `[DEBUG] ${player.name} touch the ball` ); // DEBUG
         // room.sendAnnouncement( `[DEBUG] ball state 'BAD_SERVE' : true` ); // DEBUG
         states.BAD_SERVE = true;
